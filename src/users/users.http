@@ -1,0 +1,7 @@
+POST http://localhost:3333/users
+Content-Type: application/json
+
+{
+  "name": "John",
+  "email": "pearline.ruecker76@ethereal.email"
+}

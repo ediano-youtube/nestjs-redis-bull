@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  api:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-18-bookworm
+    container_name: nestjs_redis_bull_api
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/api
+    depends_on:
+      - 'redis'
+
+  redis:
+    image: redis:6.2.3-alpine
+    container_name: nestjs_redis_bull_redis
+    ports:
+      - '6379:6379'
+    environment:
+      NODE_ENV: development
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: '10M'
+
+networks:
+  default:
+    name: nestjs_redis_bull_network_default
