@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { SendEmailService } from 'src/send-email/send-email.service';
+import { SendEmailQueueService } from '../send-email/job/send-email-queue/send-email-queue.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly sendEmailService: SendEmailService) {}
+  constructor(private readonly sendEmailQueueService: SendEmailQueueService) {}
 
   async create(createUserDto: CreateUserDto) {
     const { name, email } = createUserDto;
@@ -12,7 +12,7 @@ export class UsersService {
     /** Criação do usuário no banco de aqui */
 
     /** Enviando email em com redis aqui */
-    await this.sendEmailService.handler({ name, email });
+    await this.sendEmailQueueService.execute({ name, email });
 
     return { name, email };
   }
