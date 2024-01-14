@@ -12,7 +12,7 @@ type SendEmailQueue = {
 export class SendEmailQueueService {
   constructor(@InjectQueue('SEND_EMAIL_QUEUE') private sendEmailQueue: Queue) {}
 
-  async execute({ name, email }: SendEmailQueue) {
+  async add({ name, email }: SendEmailQueue) {
     await this.sendEmailQueue.add('SEND_EMAIL_QUEUE', { name, email });
   }
 }

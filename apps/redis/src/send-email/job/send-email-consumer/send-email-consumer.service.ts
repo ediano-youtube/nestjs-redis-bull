@@ -7,7 +7,7 @@ import {
 } from '@nestjs/bull';
 import { Job } from 'bull';
 
-import { SendEmailService } from '../../send-email.service';
+import { NodemailerService } from '../../../nodemailer/nodemailer.service';
 
 type SendEmailConsumer = {
   name: string;
@@ -16,12 +16,12 @@ type SendEmailConsumer = {
 
 @Processor('SEND_EMAIL_QUEUE')
 export class SendEmailConsumerService {
-  constructor(private readonly sendEmailService: SendEmailService) {}
+  constructor(private readonly nodemailerService: NodemailerService) {}
 
   @Process('SEND_EMAIL_QUEUE')
   async execute({ data }: Job<SendEmailConsumer>) {
     const { email, name } = data;
-    await this.sendEmailService.handler({ name, email });
+    await this.nodemailerService.handler({ name, email });
   }
 
   @OnQueueActive()

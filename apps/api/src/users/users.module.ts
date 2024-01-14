@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
+
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
-
-import { SendEmailModule } from '../send-email/send-email.module';
+import { RedisModule } from '../redis/redis.module';
 
 @Module({
-  imports: [SendEmailModule],
+  imports: [RedisModule],
   controllers: [UsersController],
   providers: [UsersService],
 })
